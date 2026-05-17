@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth overflow-y-auto" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>KayeLiang - Architectural Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style class="" data-purpose="custom-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Inter:wght@300;400;600&display=swap');
+    
+    body {
+      font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #333;
+      background-color: #fafafa;
+      line-height: 1.8;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .tracking-widest {
+      letter-spacing: 0.25em !important;
+    }
+
+    nav, footer {
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+<link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+  /* 右侧锚点导航：宽度与 right 随视口 / 安全区变化 */
+  .site-nav {
+    position: fixed;
+    z-index: 60;
+    top: 50%;
+    transform: translateY(-50%);
+    right: max(0.5rem, env(safe-area-inset-right, 0px));
+    width: min(17rem, calc(100vw - 1rem - env(safe-area-inset-right, 0px)));
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    font-family: 'Montserrat', sans-serif;
+  }
+  @media (min-width: 640px) {
+    .site-nav {
+      right: max(1rem, env(safe-area-inset-right, 0px));
+      width: min(16rem, calc(100vw - 2.5rem - env(safe-area-inset-right, 0px)));
+    }
+  }
+  @media (min-width: 1024px) {
+    .site-nav {
+      right: max(1.5rem, env(safe-area-inset-right, 0px));
+      width: min(18rem, calc(100vw - 3rem - env(safe-area-inset-right, 0px)));
+    }
+  }
+  .site-nav.nav-collapsed {
+    width: 3rem !important;
+    right: max(0.5rem, env(safe-area-inset-right, 0px)) !important;
+  }
+  @media (min-width: 640px) {
+    .site-nav.nav-collapsed {
+      width: 3.75rem !important;
+      right: max(1rem, env(safe-area-inset-right, 0px)) !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .site-nav.nav-collapsed {
+      right: max(1.5rem, env(safe-area-inset-right, 0px)) !important;
+    }
+  }
+  .site-nav.nav-collapsed a > div:first-child {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .site-nav.nav-collapsed a {
+    justify-content: center;
+    width: 100%;
+    margin-right: 0;
+    gap: 0;
+  }
+  .site-nav.nav-collapsed a div.rounded-full {
+    margin-right: 0 !important;
+  }
+  /* 导航文案：平板 / 桌面默认尺寸 */
+  .site-nav .nav-label-en {
+    font-size: clamp(0.5625rem, 0.48rem + 0.35vw, 0.6875rem);
+    line-height: 1.25;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    text-align: right;
+  }
+  .site-nav .nav-label-zh {
+    font-size: clamp(0.6875rem, 0.58rem + 0.45vw, 0.8125rem);
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    text-align: right;
+  }
+  .site-nav #nav-toggle .material-symbols-outlined {
+    font-size: clamp(1.125rem, 1rem + 0.65vw, 1.375rem);
+  }
+  .site-nav a.nav-link-row {
+    gap: clamp(0.375rem, 0.2rem + 1vw, 1rem);
+  }
+  .site-nav .nav-dot {
+    width: clamp(0.375rem, 0.3rem + 0.35vw, 0.625rem);
+    height: clamp(0.375rem, 0.3rem + 0.35vw, 0.625rem);
+    flex-shrink: 0;
+  }
+  /* 仅手机：整体再缩一档，用 vw 适配窄屏宽度 */
+  @media (max-width: 639px) {
+    .site-nav .nav-label-en {
+      font-size: clamp(0.5rem, 0.38rem + 2.1vw, 0.5625rem);
+      line-height: 1.2;
+      letter-spacing: 0.14em;
+    }
+    .site-nav .nav-label-zh {
+      font-size: clamp(0.5625rem, 0.45rem + 2.4vw, 0.65625rem);
+      line-height: 1.28;
+    }
+    .site-nav #nav-toggle .material-symbols-outlined {
+      font-size: clamp(0.9375rem, 0.82rem + 1.8vw, 1.125rem);
+    }
+    .site-nav a.nav-link-row {
+      gap: clamp(0.28rem, 0.12rem + 1.8vw, 0.55rem);
+    }
+    .site-nav .nav-dot {
+      width: clamp(0.28rem, 0.2rem + 0.9vw, 0.4375rem);
+      height: clamp(0.28rem, 0.2rem + 0.9vw, 0.4375rem);
+    }
+    .site-nav {
+      width: min(13.5rem, calc(100vw - 0.75rem - env(safe-area-inset-right, 0px)));
+    }
+    .site-nav.nav-collapsed {
+      width: 2.75rem !important;
+    }
+  }
+  /*
+   * 项目「左图 + 右元信息」分栏（复用：.project-split / __media / __media-fill / __meta）
+   * ≥md：两列 stretch 等高，图区取消固定比例、铺满列高；<md：图区 4:5 比例全宽
+   */
+  .project-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 768px) {
+    .project-split {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: stretch;
+      column-gap: 3rem;
+      row-gap: 3rem;
+    }
+    .project-split__media {
+      grid-column: span 7;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+    .project-split__meta {
+      grid-column: span 5;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: 100%;
+    }
+    .project-split__media-fill {
+      position: relative;
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .project-split__media-fill > .project-split__track {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  @media (max-width: 767px) {
+    .project-split__media-fill {
+      aspect-ratio: 4 / 5;
+      width: 100%;
+    }
+  }
+  /* 顶栏：左 XLSTUDIO | 中图 | 右标语，横向铺满、无卡片底 */
+  .site-topbar {
+    position: fixed;
+    z-index: 55;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(0.35rem, 1.5vw, 0.85rem);
+    padding-top: max(0.45rem, env(safe-area-inset-top, 0px));
+    padding-bottom: 0.4rem;
+    padding-left: max(0.55rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.55rem, env(safe-area-inset-right, 0px));
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.85);
+    pointer-events: none;
+  }
+  .site-topbar .topbar-zone {
+    pointer-events: auto;
+  }
+  .site-topbar .brand-mark-slot {
+    width: clamp(5rem, 14vw + 2.5rem, 7.5rem);
+    height: clamp(1.65rem, 3.8vw + 0.75rem, 2.35rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-radius 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+  }
+  .site-topbar .brand-mark-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: opacity 0.28s ease, transform 0.32s ease;
+  }
+  .site-topbar .brand-mark-img.is-swapping {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  .studio-title {
+    font-size: clamp(0.8125rem, 0.48rem + 1.2vw, 1.2rem);
+    letter-spacing: clamp(0.1em, 0.06em + 0.35vw, 0.18em);
+    line-height: 1.1;
+    max-width: 38vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .topbar-tagline {
+    font-size: clamp(0.75rem, 0.52rem + 0.9vw, 0.9375rem);
+    font-weight: 500;
+    color: #111827;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+    max-width: 42vw;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .brand-variant-hero {
+    border-radius: 0.25rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  .brand-variant-about {
+    border-radius: 9999px;
+    background: rgba(243, 244, 246, 0.65);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+    box-shadow: none;
+  }
+  .brand-variant-intro {
+    border-radius: 0.35rem;
+    background: rgba(236, 253, 245, 0.55);
+    border: 1px solid rgba(167, 243, 208, 0.45);
+    box-shadow: none;
+  }
+  .brand-variant-ad23 {
+    border-radius: 2px;
+    background: rgba(250, 250, 250, 0.7);
+    border: 1px solid rgba(229, 229, 229, 0.65);
+    box-shadow: none;
+  }
+  .brand-variant-shanhai {
+    border-radius: 0.65rem;
+    background: rgba(255, 251, 235, 0.65);
+    border: 1px solid rgba(253, 230, 138, 0.45);
+    box-shadow: none;
+  }
+</style></head>
+<body class="antialiased bg-gray-50 text-gray-800" data-mode="connect">
+<!-- BEGIN: Top bar — 左 XLSTUDIO | 中图 | 右标语 -->
+<header class="site-topbar font-['Montserrat',sans-serif]" id="top" aria-label="站点顶栏">
+<div class="topbar-zone studio-title shrink-0 font-bold uppercase text-gray-900" id="studio-title">XLSTUDIOOOOOO</div>
+<div class="topbar-zone flex min-w-0 flex-1 justify-center px-1 sm:px-3">
+<div class="brand-mark-slot brand-variant-hero overflow-hidden" id="brand-mark-slot">
+<img alt="" class="brand-mark-img" decoding="async" fetchpriority="high" id="brand-mark-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBkVDAcICu7We342VFBc1VWMMxffHoByLGSlu6H2NuxXErDrXHOeSJPZVyvTI08sDI4P_PdGmfZursWdfcUr9ZyWiTeRE7mk9DEf0iKG76qZsKx9VKhawA-IcsZIoHVi-F-lbjQAbcX_ZLHBxwcPBIeCxxNBgi1t9XwS1NuCxZTJK0CIOaMkP4_R5rdHSU8UVJUVGua3zaB1VBjm_aemnE4ni1NOS13unaPHE_YatdrGj5Ie-1VivmyLm_k5gcdIAWMN6Y8H6SAb8"/>
+</div>
+</div>
+<nav class="topbar-zone shrink-0">
+<a class="topbar-tagline font-['Noto_Serif_SC','Noto Serif SC',serif] font-normal normal-case transition-colors hover:text-gray-600" href="#">天生浪漫思考家</a>
+</nav>
+</header>
+<!-- END: Top bar -->
+<!-- BEGIN: Main Content -->
+<main class="pt-[max(3.35rem,calc(2.85rem+env(safe-area-inset-top,0px)))] pb-20 pl-4 pr-[calc(0.75rem+min(17rem,100vw-1rem))] sm:pl-6 sm:pr-28 md:pl-10 md:pr-32 lg:pl-24 lg:pr-44 xl:pl-32 xl:pr-52">
+<!-- BEGIN: Hero Section -->
+<section class="max-w-7xl mx-auto px-4 mb-24 relative scroll-mt-32 md:scroll-mt-36" id="hero" style="max-width: 100%;">
+<div class="relative w-full overflow-hidden bg-gray-200 aspect-square md:aspect-[21/18]">
+<div class="relative w-full h-full overflow-hidden rounded-xl group" id="hero-carousel">
+<div class="flex transition-transform duration-500 ease-in-out h-full" id="carousel-inner">
+<div class="min-w-full h-full relative">
+<img alt="Minimalist modern concrete building" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBkVDAcICu7We342VFBc1VWMMxffHoByLGSlu6H2NuxXErDrXHOeSJPZVyvTI08sDI4P_PdGmfZursWdfcUr9ZyWiTeRE7mk9DEf0iKG76qZsKx9VKhawA-IcsZIoHVi-F-lbjQAbcX_ZLHBxwcPBIeCxxNBgi1t9XwS1NuCxZTJK0CIOaMkP4_R5rdHSU8UVJUVGua3zaB1VBjm_aemnE4ni1NOS13unaPHE_YatdrGj5Ie-1VivmyLm_k5gcdIAWMN6Y8H6SAb8"/>
+</div>
+<div class="min-w-full h-full relative">
+<img alt="Modern minimalist gallery interior" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS8pRrnY77jSkiFENC2RM9Sj4mY0fiEAz6S06f0g_Rid1_uPcCxjHR7ZBFSf-z3SUrOW4ScJeINBw09aMXdGGdJehXo_yRw3ly11WS61FqmYN4NpS6gia47ha5y9h3t1wsWTveSg3mt_phi97P1xsly4S0OkxOA6wmDxtzUyppFYijxYTU9CslevG44d_0YwQ79OCQuMbdGfs_Do2pbhuUSNwa41LmQiT6-2NfbI0-5GkuYc2CNQiIwI8hB4aFmp6jROrTH7JOJuY"/>
+</div>
+<div class="min-w-full h-full relative">
+<img alt="Abstract architectural stone detail" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCCbjrtaip2NzkkVL_U3krPgR1t0fu2gHy5h_Y_mMviVBPXxH6iXHisbV-4ZJazt1W0qCnAO-UdYpseF_40_cdKVDWRACoWwJNhjS_H_fz7TqUxZjVL6AWSOEYZrTMl5TfEdgXvJJmMQcPBdd8_LfBfjUFZ25ycptCNCDGHlyTnwBojYSJ1Pth060Kr6HYfA6L6Ic6SmBhSEUDzUeFE7Q30dh_Y-ijo1NdvvZgM8mZdWqPaDljwtonORjZjNb48KhSuM68fBtfOW4"/>
+</div>
+</div>
+<button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-2 rounded-full transition-opacity opacity-0 group-hover:opacity-100 focus:outline-none" id="prev-slide">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-2 rounded-full transition-opacity opacity-0 group-hover:opacity-100 focus:outline-none" id="next-slide">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
+<button class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-colors" data-index="0"></button>
+<button class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-colors" data-index="1"></button>
+<button class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-colors" data-index="2"></button>
+</div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+</div>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Map Section -->
+<section class="max-w-7xl mx-auto px-4 mb-32" id="map" style="max-width: 100%;">
+<div class="scroll-mt-32 md:scroll-mt-36" id="for-me">
+<button class="flex items-center space-x-2 text-lg font-bold mb-6 hover:text-gray-500 transition-colors focus:outline-none" id="for-me-toggle">
+<span class="">FOR ME </span>
+<span class="material-symbols-outlined text-[20px] transition-transform duration-300" id="for-me-icon">add</span>
+</button>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start pt-4" id="for-me-content" style="display: none;">
+<!-- Left Column: Education -->
+<div class="space-y-12 flex-1">
+<div class="pb-4 border-b border-gray-200">
+<h4 class="text-[10px] tracking-widest uppercase font-bold text-gray-400 mb-1">Education background</h4>
+<h2 class="text-2xl font-bold text-primary">教育背景</h2>
+</div>
+<div class="space-y-8">
+<div class="space-y-1">
+<h3 class="text-lg font-bold text-primary">华侨大学</h3>
+<p class="text-sm font-medium text-gray-600">建筑学 硕士 2024 - 2027</p>
+<p class="text-xs text-gray-400 italic">HQU Master of Architecture 2024 - 2027</p>
+</div>
+<div class="space-y-1">
+<h3 class="text-lg font-bold text-primary">南华大学</h3>
+<p class="text-sm font-medium text-gray-600">建筑学 学士 2018 - 2023</p>
+</div>
+</div>
+</div>
+<!-- Middle Column: Practical Experience -->
+<div class="space-y-12 flex-1">
+<div class="pb-4 border-b border-gray-200">
+<h4 class="text-[10px] tracking-widest uppercase font-bold text-gray-400 mb-1">Work Experience</h4>
+<h2 class="text-2xl font-bold text-primary">实践经历</h2>
+</div>
+<div class="space-y-8">
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<h3 class="text-lg font-bold text-primary">FA工作室</h3>
+<span class="text-[10px] text-gray-400 font-medium">2024.09-2027.06</span>
+</div>
+<p class="text-sm font-medium text-gray-600">硕士研究生</p>
+<p class="text-xs text-gray-500 leading-relaxed">参与厦门高崎海洋文化时尚艺术节策展、福建泉州晋江松熹中学设计改造、福建厦门一等邮局改造</p>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<h3 class="text-lg font-bold text-primary">本科实践</h3>
+<span class="text-[10px] text-gray-400 font-medium">2018.09-2023.06</span>
+</div>
+<p class="text-sm font-medium text-gray-600">方案实习生</p>
+<p class="text-xs text-gray-500 leading-relaxed">参与多项市政景观与住宅社区方案深化与效果图表现</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Honors and Awards -->
+<div class="space-y-12 flex-1">
+<div class="pb-4 border-b border-gray-200">
+<h4 class="text-[10px] tracking-widest uppercase font-bold text-gray-400 mb-1">Honors and Awards</h4>
+<h2 class="text-2xl font-bold text-primary">荣誉奖项</h2>
+</div>
+<div class="space-y-6">
+<div class="border-b border-gray-100 pb-4">
+<div class="flex flex-col mb-1">
+<h3 class="text-lg font-bold text-primary">厦门高崎海洋文化时尚艺术季节</h3>
+<p class="text-sm font-medium text-gray-600">在此处输入详细描述内容</p>
+</div>
+</div>
+<div class="border-b border-gray-100 pb-4">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="text-lg font-bold text-primary">湖南省2021年大学生可持续建筑竞赛三等奖</h3>
+</div>
+<p class="text-sm font-medium text-gray-600">2021</p>
+</div>
+<div class="pb-4">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="text-lg font-bold text-primary">竞赛荣誉</h3>
+</div>
+<p class="text-sm font-medium text-gray-600">优秀设计奖</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Map Section -->
+<!-- BEGIN: Projects List -->
+<!-- 左图+右文 复用：.project-split → .project-split__media → .project-split__media-fill → .project-split__track（轮播）| .project-split__meta；≥md 两列等高，手机图区 4:5。正文放 .project-split 外同级。 -->
+<div class="space-y-40">
+<!-- Project 1 (Image Left) -->
+<section class="mx-auto px-4" id="in-their-eyes" style="max-width: 100%; font-family: 'Montserrat', sans-serif;">
+<div class="project-split">
+<!-- Left: 图（桌面与右侧同高；手机 4:5） — 复用 .project-split__* -->
+<div class="project-split__media relative group">
+<div class="project-split__media-fill relative w-full overflow-hidden rounded-sm" id="ite-carousel-v2">
+<div class="project-split__track flex h-full transition-transform duration-500 ease-in-out" id="ite-carousel-inner-v2" style="transform: translateX(-100%);">
+<div class="min-w-full h-full relative">
+<img alt="In Their Eyes Model" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uhAzP3pabsYsm_gOD66AxwvvNPELtxZutS7hYWFRforGpcGB26Tm4fk9CwxIq98pau9GpO2Ir52uw9RqqElchVEGSjskcreYOEWS1---YAbe-lZvWhZGUqEoW3dhu2tgpNrny1JmADle0soctxT48QQoDrPAwCTQ7fm4ltB3ACcjOKF2l5pGyalwwtZBdjkRCt-OixX-3VoVKIoSLHwTKZbBmuE-2CAbgRyCwHCxbvFCHXNLJVQtKE7E1YogdRvOtfwfmfg77406Q"/>
+</div>
+<div class="min-w-full h-full relative">
+<img alt="Project Detail" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOrlOI89jgLqWR7QWTMhjuIc2ovau5KH_j4QJX8S5Ub8JeshPVRIIFRLBiokBKawoGa2beaEjcgOUQeh8WmDObk9tCwliQbfrsdStDYKqMuZeJ5i4L3wKgxNgimtnydoVD0shvAAhRi3oMXXhulJoUTxqTN4OB63S4m7xCMEonGaHNgda5k-m2TX97V4LV63YhsM5wLgDaAonugcfZ96ogrQ-QwnLSA2qdy6ida-9jlll9GZpvpdQ6lkoAJbc4ImLkRAYML_LLkvY"/>
+</div>
+</div>
+<!-- Carousel Controls -->
+<button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/60 p-2 rounded-full transition-opacity opacity-0 group-hover:opacity-100" onclick="this.parentElement.querySelector('#ite-carousel-inner-v2').style.transform = 'translateX(0%)'">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/60 p-2 rounded-full transition-opacity opacity-0 group-hover:opacity-100" onclick="this.parentElement.querySelector('#ite-carousel-inner-v2').style.transform = 'translateX(-100%)'">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<div class="absolute bottom-4 right-4 bg-black/60 text-white text-[10px] px-3 py-1 rounded-full">
+          1 / 10
+        </div>
+</div>
+</div>
+<!-- Right: Metadata Panel (40%) -->
+<div class="project-split__meta flex flex-col">
+<div class="flex items-baseline space-x-2 mb-8">
+<span class="text-[10px] text-gray-400 font-medium tracking-tighter">AD25</span>
+<h3 class="font-semibold tracking-tight text-2xl">潮起高崎，文化共鸣</h3>
+</div>
+<div class="mb-6 border-t border-gray-100 pt-6">
+<button class="flex items-center space-x-2 text-[10px] tracking-widest uppercase font-bold text-gray-800 hover:text-gray-500 transition-colors py-2 border-b border-black mb-4" onclick="const details = document.getElementById('ite-full-details'); details.classList.toggle('hidden'); const icon = this.querySelector('.toggle-icon'); icon.textContent = icon.textContent === 'add' ? 'remove' : 'add';">
+<span class="">More detail</span>
+<span class="material-symbols-outlined text-[16px] toggle-icon">remove</span>
+</button>
+</div>
+<div class="" id="ite-full-details">
+<table class="w-full text-[13px] text-gray-600 mb-10">
+<tbody>
+<tr class="border-b border-gray-100">
+<td class="py-3 w-32 font-medium text-gray-400">项目名称</td>
+<td class="py-3">厦门高崎海洋文化时尚艺术季</td>
+</tr>
+<tr class="border-b border-gray-100">
+<td class="py-3 font-medium text-gray-400">设计时间</td>
+<td class="py-3">2025.05-2025.12</td>
+</tr>
+<tr class="border-b border-gray-100">
+<td class="py-3 font-medium text-gray-400">项目地点</td>
+<td class="py-3">中国福建厦门高崎社</td>
+</tr>
+<tr class="border-b border-gray-100">
+<td class="py-3 font-medium text-gray-400">功能类型</td>
+<td class="py-3">文化艺术策展</td>
+</tr>
+<tr class="border-b border-gray-100">
+<td class="py-3 font-medium text-gray-400">主策划</td>
+<td class="py-3">熊晓龙、王思琦</td>
+</tr>
+<tr class="border-b border-gray-100">
+<td class="py-3 font-medium text-gray-400"></td>
+<td class="py-3"></td>
+</tr>
+<tr class="border-b border-gray-100">
+<td class="py-3 font-medium text-gray-400"></td>
+<td class="py-3"></td>
+</tr>
+<tr class="">
+<td class="py-3 font-medium text-gray-400"></td>
+<td class="py-3"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="prose prose-sm text-[15px] leading-relaxed text-gray-600 space-y-6 mt-12 border-t border-gray-100 pt-12 w-full max-w-none">
+<p class="">厦门城市设计周高崎海洋文化时尚艺术季是依托高崎寨历史文脉、海洋文化和城市更新实践开展的综合性公共艺术活动，也是2025年厦门城市设计周分会场活动之一。</p>
+<p class="">活动以“海·潮”为主题，通过19处公共空间艺术装置、开幕活动、主题沙龙、成果展示、导览打卡和公众互动等形式，联动政府、高校、社区、专家、艺术家与设计机构共同参与，探索以公共艺术激活社区空间、传播城市形象、提升公共文化服务的新路径。项目在策划和实施过程中，充分结合高崎寨海防历史、渔村记忆、社区空间现状与文旅融合需求，统筹完成调研、设计、施工、宣传和活动组织等工作，并兼顾安全、耐久、居民通行和后期维护。整体来看，艺术季提升了高崎寨公共空间识别度和文化氛围，增强了社会传播力和专业影响力，为打造高崎文化IP、推动艺术赋能城市更新积累了实践经验，也体现了政府、高校、社区和社会专业力量协同参与公共文化建设的价值。</p>
+<p class=""></p>
+</div>
+</section><section class="mx-auto px-4" id="in-their-eyes-duplicate-1" style="max-width: 100%; font-family: 'Montserrat', sans-serif;">
+<div class="project-split">
+<div class="project-split__media relative group">
+<div class="project-split__media-fill relative w-full overflow-hidden rounded-sm">
+<div class="project-split__track flex h-full transition-transform duration-500 ease-in-out">
+<div class="min-w-full h-full relative">
+<img alt="In Their Eyes Model" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uhAzP3pabsYsm_gOD66AxwvvNPELtxZutS7hYWFRforGpcGB26Tm4fk9CwxIq98pau9GpO2Ir52uw9RqqElchVEGSjskcreYOEWS1---YAbe-lZvWhZGUqEoW3dhu2tgpNrny1JmADle0soctxT48QQoDrPAwCTQ7fm4ltB3ACcjOKF2l5pGyalwwtZBdjkRCt-OixX-3VoVKIoSLHwTKZbBmuE-2CAbgRyCwHCxbvFCHXNLJVQtKE7E1YogdRvOtfwfmfg77406Q"/>
+</div>
+</div>
+</div>
+</div>
+<div class="project-split__meta flex flex-col">
+<div class="flex items-baseline space-x-2 mb-8">
+<span class="text-[10px] text-gray-400 font-medium tracking-tighter">AD24</span>
+<h3 class="text-4xl font-semibold tracking-tight">晋江松熹中学</h3>
+</div>
+<div class="mb-6 border-t border-gray-100 pt-6">
+<button class="flex items-center space-x-2 text-[10px] tracking-widest uppercase font-bold text-gray-800 hover:text-gray-500 transition-colors py-2 border-b border-black mb-4">
+<span class="">MORE DETAIL</span>
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+</div>
+</div>
+</div>
+<div class="prose prose-sm text-[15px] leading-relaxed text-gray-600 space-y-6 mt-12 border-t border-gray-100 pt-12 w-full max-w-none">
+<p class="">晋江松溪中学</p>
+</div>
+</section><section class="mx-auto px-4" id="in-their-eyes-duplicate-2" style="max-width: 100%; font-family: 'Montserrat', sans-serif;">
+<div class="project-split">
+<div class="project-split__media relative group">
+<div class="project-split__media-fill relative w-full overflow-hidden rounded-sm">
+<div class="project-split__track flex h-full transition-transform duration-500 ease-in-out">
+<div class="min-w-full h-full relative">
+<img alt="In Their Eyes Model" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uhAzP3pabsYsm_gOD66AxwvvNPELtxZutS7hYWFRforGpcGB26Tm4fk9CwxIq98pau9GpO2Ir52uw9RqqElchVEGSjskcreYOEWS1---YAbe-lZvWhZGUqEoW3dhu2tgpNrny1JmADle0soctxT48QQoDrPAwCTQ7fm4ltB3ACcjOKF2l5pGyalwwtZBdjkRCt-OixX-3VoVKIoSLHwTKZbBmuE-2CAbgRyCwHCxbvFCHXNLJVQtKE7E1YogdRvOtfwfmfg77406Q"/>
+</div>
+</div>
+</div>
+</div>
+<div class="project-split__meta flex flex-col">
+<div class="flex items-baseline space-x-2 mb-8">
+<span class="text-[10px] text-gray-400 font-medium tracking-tighter">AD23</span>
+<h3 class="text-4xl font-semibold tracking-tight">In Their Eyes</h3>
+</div>
+<div class="mb-6 border-t border-gray-100 pt-6">
+<button class="flex items-center space-x-2 text-[10px] tracking-widest uppercase font-bold text-gray-800 hover:text-gray-500 transition-colors py-2 border-b border-black mb-4">
+<span class="">VIEW PROJECT INFO</span>
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+</div>
+</div>
+</div>
+<div class="prose prose-sm text-[15px] leading-relaxed text-gray-600 space-y-6 mt-12 border-t border-gray-100 pt-12 w-full max-w-none">
+<p class="">本项目"In Their Eyes"是大健康建筑多校联合毕业设计...</p>
+</div>
+</section><section class="mx-auto px-4" id="in-their-eyes-duplicate-3" style="max-width: 100%; font-family: 'Montserrat', sans-serif;">
+<div class="project-split">
+<div class="project-split__media relative group">
+<div class="project-split__media-fill relative w-full overflow-hidden rounded-sm">
+<div class="project-split__track flex h-full transition-transform duration-500 ease-in-out">
+<div class="min-w-full h-full relative">
+<img alt="In Their Eyes Model" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uhAzP3pabsYsm_gOD66AxwvvNPELtxZutS7hYWFRforGpcGB26Tm4fk9CwxIq98pau9GpO2Ir52uw9RqqElchVEGSjskcreYOEWS1---YAbe-lZvWhZGUqEoW3dhu2tgpNrny1JmADle0soctxT48QQoDrPAwCTQ7fm4ltB3ACcjOKF2l5pGyalwwtZBdjkRCt-OixX-3VoVKIoSLHwTKZbBmuE-2CAbgRyCwHCxbvFCHXNLJVQtKE7E1YogdRvOtfwfmfg77406Q"/>
+</div>
+</div>
+</div>
+</div>
+<div class="project-split__meta flex flex-col">
+<div class="flex items-baseline space-x-2 mb-8">
+<span class="text-[10px] text-gray-400 font-medium tracking-tighter">AD23</span>
+<h3 class="text-4xl font-semibold tracking-tight">In Their Eyes</h3>
+</div>
+<div class="mb-6 border-t border-gray-100 pt-6">
+<button class="flex items-center space-x-2 text-[10px] tracking-widest uppercase font-bold text-gray-800 hover:text-gray-500 transition-colors py-2 border-b border-black mb-4">
+<span class="">VIEW PROJECT INFO</span>
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+</div>
+</div>
+</div>
+<div class="prose prose-sm text-[15px] leading-relaxed text-gray-600 space-y-6 mt-12 border-t border-gray-100 pt-12 w-full max-w-none">
+<p class="">本项目"In Their Eyes"是大健康建筑多校联合毕业设计...</p>
+</div>
+</section>
+<!-- Project 2 (Image Right) -->
+<section class="mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-16 items-center" id="shanhai" style="max-width: 100%;">
+<div class="order-2 md:order-1"><h3 class="text-3xl font-bold mb-8 relative inline-block"><span class="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-px bg-black"></span>山海の間</h3><div class="mb-6"><button class="flex items-center space-x-2 text-[10px] tracking-widest uppercase font-bold text-gray-800 hover:text-gray-500 transition-colors py-2 border-b border-black" onclick="this.parentElement.nextElementSibling.classList.toggle('hidden'); const icon = this.querySelector('.toggle-icon'); icon.textContent = icon.textContent === 'add' ? 'remove' : 'add';"><span class="">VIEW PROJECT INFO</span><span class="material-symbols-outlined text-[16px] toggle-icon">remove</span></button></div><div class="project-details space-y-8 transition-all duration-300"><table class="w-full text-sm text-gray-600 mb-8 border-collapse"><tbody><tr class="border-b border-gray-100"><td class="py-2 w-24 font-medium">项目名称</td><td class="py-2">NOT A HOTEL 屋久岛度假设计</td></tr><tr class="border-b border-gray-100"><td class="py-2 font-medium">时间</td><td class="py-2">2020-11-12</td></tr><tr class="border-b border-gray-100"><td class="py-2 font-medium">状态</td><td class="py-2">日本建筑设计竞赛 (Yakushima, Japan)</td></tr><tr class="border-b border-gray-100"><td class="py-2 font-medium">类型</td><td class="py-2">酒店、景观、建筑</td></tr><tr class="border-b border-gray-100"><td class="py-2 font-medium">面积</td><td class="py-2">200㎡</td></tr><tr><td class="py-2 font-medium">团队</td><td class="py-2">梁凯翔、刘欢、李雪、丁雅馨</td></tr></tbody></table><div class="prose prose-sm text-gray-600 max-w-none"><p class="">屋久岛位于日本九州岛的南端，是一个充满神秘色彩的海岛。岛上覆盖着茂密的原始森林，是宫崎骏动画《幽灵公主》的取景地。项目旨在在这片自然保护区内，设计一座融入环境、环保且具有独特体验的度假别墅。</p><p class="">设计灵感来源于岛上独特的自然景观：连绵的山脉和浩瀚的海洋。建筑主体犹如一块破土而出的岩石，与周围的地形地貌相呼应。屋顶采用当地传统的茅草覆盖，既能有效隔热，又能与自然景观融为一体。内部空间设计注重通透性和观景视野，大面积的落地窗将室外美景引入室内，模糊了室内外边界。</p></div></div></div>
+<div class="order-1 md:order-2 relative group">
+<div class="w-full aspect-square md:aspect-[4/5] bg-gray-300 flex items-center justify-center text-lg text-gray-600 font-mono shadow-lg transition-transform duration-500 ease-in-out hover:scale-105">800x1000</div>
+</div>
+</section>
+<!-- Add more projects here following the same alternating pattern -->
+</div>
+<!-- END: Projects List -->
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: Footer -->
+<footer class="bg-white border-t border-gray-200 py-12 mt-32">
+<div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+<div class="mb-4 md:mb-0">
+        © 2024 KayeLiang. All rights reserved.
+      </div>
+<div class="flex">
+<a class="hover:text-black transition-colors px-4 py-1.5 border border-gray-200 rounded-full hover:border-black transition-all duration-300" href="#">Wechat</a>
+<a class="hover:text-black transition-colors px-4 py-1.5 border border-gray-200 rounded-full hover:border-black transition-all duration-300" href="#">Behance</a>
+<a class="hover:text-black transition-colors px-4 py-1.5 border border-gray-200 rounded-full hover:border-black transition-all duration-300" href="#">LinkedIn</a>
+</div>
+</div>
+</footer>
+<!-- END: Footer -->
+<nav class="site-nav flex flex-col items-end space-y-5 sm:space-y-7 md:space-y-8 pointer-events-none transition-all duration-500" id="site-nav"><button aria-label="Toggle Navigation" class="pointer-events-auto mb-1.5 sm:mb-4 shrink-0 p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center touch-manipulation" id="nav-toggle">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- ABOUT -->
+<a class="group nav-link-row flex items-center pointer-events-auto transition-all duration-300" data-brand-key="about" href="#hero">
+<div class="flex flex-col items-end opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+<span class="nav-label-en tracking-widest uppercase text-primary">Main </span>
+<span class="nav-label-zh text-primary">主页</span>
+</div>
+<div class="nav-dot rounded-full bg-gray-300 group-hover:bg-black transition-colors"></div>
+</a>
+<!-- MAP -->
+<a class="group nav-link-row flex items-center pointer-events-auto transition-all duration-300" data-brand-key="intro" href="#for-me">
+<div class="flex flex-col items-end opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+<span class="nav-label-en tracking-widest uppercase text-primary">FOR ME</span>
+<span class="nav-label-zh text-primary">关于我</span>
+</div>
+<div class="nav-dot rounded-full bg-gray-300 group-hover:bg-black transition-colors"></div>
+</a>
+<!-- AD25 -->
+<a class="group nav-link-row flex items-center pointer-events-auto transition-all duration-300" data-brand-key="ad23" href="#in-their-eyes">
+<div class="flex flex-col items-end opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+<span class="nav-label-en tracking-widest uppercase text-primary">AD25
+  <br>CURATION
+</span>
+<span class="nav-label-zh text-primary">厦门高崎
+  <br>海洋文化时尚艺术季</span>
+</div>
+<div class="nav-dot rounded-full bg-gray-300 group-hover:bg-black transition-colors"></div>
+</a>
+<!-- CW06 -->
+<a class="group nav-link-row flex items-center pointer-events-auto transition-all duration-300" data-brand-key="shanhai" href="#shanhai">
+<div class="flex flex-col items-end opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+<span class="nav-label-en tracking-widest uppercase text-primary">CW06</span>
+<span class="nav-label-zh text-primary">山海の間</span>
+</div>
+<div class="nav-dot rounded-full bg-gray-300 group-hover:bg-black transition-colors"></div>
+</a>
+<!-- Add extra spacing or placeholder for more projects as per image if needed, but sticking to existing page anchors -->
+</nav>
+<script>
+  document.getElementById('nav-toggle').addEventListener('click', function () {
+    const nav = this.closest('nav');
+    const icon = this.querySelector('.material-symbols-outlined');
+    nav.classList.toggle('nav-collapsed');
+    icon.textContent = nav.classList.contains('nav-collapsed') ? 'menu' : 'close';
+  });
+
+  (function () {
+    const toggleBtn = document.getElementById('for-me-toggle');
+    const content = document.getElementById('for-me-content');
+    const icon = document.getElementById('for-me-icon');
+    if (toggleBtn && content && icon) {
+      toggleBtn.addEventListener('click', () => {
+        const isCollapsed = content.style.display === 'none';
+        content.style.display = isCollapsed ? 'grid' : 'none';
+        icon.textContent = isCollapsed ? 'remove' : 'add';
+        icon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+    }
+  })();
+
+  (function () {
+    const inner = document.getElementById('carousel-inner');
+    const prev = document.getElementById('prev-slide');
+    const next = document.getElementById('next-slide');
+    const dots = document.querySelectorAll('#hero-carousel .carousel-dot');
+    if (!inner || !prev || !next) return;
+    const total = inner.querySelectorAll(':scope > div').length || 1;
+    let index = 0;
+    function syncDots() {
+      dots.forEach((dot, i) => {
+        dot.style.backgroundColor = i === index ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.4)';
+      });
+    }
+    function go(i) {
+      index = ((i % total) + total) % total;
+      inner.style.transform = 'translateX(-' + index * 100 + '%)';
+      syncDots();
+    }
+    prev.addEventListener('click', function (e) {
+      e.preventDefault();
+      go(index - 1);
+    });
+    next.addEventListener('click', function (e) {
+      e.preventDefault();
+      go(index + 1);
+    });
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        go(Number(dot.getAttribute('data-index')));
+      });
+    });
+    go(0);
+  })();
+
+  (function () {
+    var slot = document.getElementById('brand-mark-slot');
+    var img = document.getElementById('brand-mark-img');
+    if (!slot || !img) return;
+
+    var SPECS = {
+      hero: {
+        variant: 'hero',
+        alt: '主视觉',
+        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCBkVDAcICu7We342VFBc1VWMMxffHoByLGSlu6H2NuxXErDrXHOeSJPZVyvTI08sDI4P_PdGmfZursWdfcUr9ZyWiTeRE7mk9DEf0iKG76qZsKx9VKhawA-IcsZIoHVi-F-lbjQAbcX_ZLHBxwcPBIeCxxNBgi1t9XwS1NuCxZTJK0CIOaMkP4_R5rdHSU8UVJUVGua3zaB1VBjm_aemnE4ni1NOS13unaPHE_YatdrGj5Ie-1VivmyLm_k5gcdIAWMN6Y8H6SAb8',
+      },
+      about: {
+        variant: 'about',
+        alt: '个人简介',
+        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCS8pRrnY77jSkiFENC2RM9Sj4mY0fiEAz6S06f0g_Rid1_uPcCxjHR7ZBFSf-z3SUrOW4ScJeINBw09aMXdGGdJehXo_yRw3ly11WS61FqmYN4NpS6gia47ha5y9h3t1wsWTveSg3mt_phi97P1xsly4S0OkxOA6wmDxtzUyppFYijxYTU9CslevG44d_0YwQ79OCQuMbdGfs_Do2pbhuUSNwa41LmQiT6-2NfbI0-5GkuYc2CNQiIwI8hB4aFmp6jROrTH7JOJuY',
+      },
+      intro: {
+        variant: 'intro',
+        alt: '个人介绍',
+        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCCCbjrtaip2NzkkVL_U3krPgR1t0fu2gHy5h_Y_mMviVBPXxH6iXHisbV-4ZJazt1W0qCnAO-UdYpseF_40_cdKVDWRACoWwJNhjS_H_fz7TqUxZjVL6AWSOEYZrTMl5TfEdgXvJJmMQcPBdd8_LfBfjUFZ25ycptCNCDGHlyTnwBojYSJ1Pth060Kr6HYfA6L6Ic6SmBhSEUDzUeFE7Q30dh_Y-ijo1NdvvZgM8mZdWqPaDljwtonORjZjNb48KhSuM68fBtfOW4',
+      },
+      ad23: {
+        variant: 'ad23',
+        alt: 'In Their Eyes',
+        src: 'https://lh3.googleusercontent.com/aida/ADBb0uhAzP3pabsYsm_gOD66AxwvvNPELtxZutS7hYWFRforGpcGB26Tm4fk9CwxIq98pau9GpO2Ir52uw9RqqElchVEGSjskcreYOEWS1---YAbe-lZvWhZGUqEoW3dhu2tgpNrny1JmADle0soctxT48QQoDrPAwCTQ7fm4ltB3ACcjOKF2l5pGyalwwtZBdjkRCt-OixX-3VoVKIoSLHwTKZbBmuE-2CAbgRyCwHCxbvFCHXNLJVQtKE7E1YogdRvOtfwfmfg77406Q',
+      },
+      shanhai: {
+        variant: 'shanhai',
+        alt: '山海の間',
+        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAOrlOI89jgLqWR7QWTMhjuIc2ovau5KH_j4QJX8S5Ub8JeshPVRIIFRLBiokBKawoGa2beaEjcgOUQeh8WmDObk9tCwliQbfrsdStDYKqMuZeJ5i4L3wKgxNgimtnydoVD0shvAAhRi3oMXXhulJoUTxqTN4OB63S4m7xCMEonGaHNgda5k-m2TX97V4LV63YhsM5wLgDaAonugcfZ96ogrQ-QwnLSA2qdy6ida-9jlll9GZpvpdQ6lkoAJbc4ImLkRAYML_LLkvY',
+      },
+    };
+
+    var VARIANT_NAMES = ['hero', 'about', 'intro', 'ad23', 'shanhai'];
+    function setVariantClass(name) {
+      VARIANT_NAMES.forEach(function (n) {
+        slot.classList.remove('brand-variant-' + n);
+      });
+      slot.classList.add('brand-variant-' + name);
+    }
+
+    var currentKey = null;
+    var brandLockUntil = 0;
+
+    function applyBrandKey(key) {
+      var spec = SPECS[key] || SPECS.hero;
+      if (key === currentKey) return;
+      currentKey = key;
+      img.classList.add('is-swapping');
+      window.setTimeout(function () {
+        setVariantClass(spec.variant);
+        img.alt = spec.alt;
+        img.src = spec.src;
+        function onLoad() {
+          img.removeEventListener('load', onLoad);
+          img.classList.remove('is-swapping');
+        }
+        img.addEventListener('load', onLoad);
+        if (img.complete) img.classList.remove('is-swapping');
+      }, 120);
+    }
+
+    var SECTION_TO_KEY = { hero: 'hero', 'in-their-eyes': 'ad23', shanhai: 'shanhai' };
+    var forMeBrand = 'intro';
+    var lastPickedSection = 'hero';
+    var sections = ['hero', 'for-me', 'in-their-eyes', 'shanhai']
+      .map(function (id) {
+        return document.getElementById(id);
+      })
+      .filter(Boolean);
+    var ratios = new Map();
+
+    function pickSectionId() {
+      var bestId = 'hero';
+      var best = -1;
+      sections.forEach(function (el) {
+        var r = ratios.get(el) || 0;
+        if (r > best) {
+          best = r;
+          bestId = el.id;
+        }
+      });
+      if (best <= 0) return 'hero';
+      return bestId;
+    }
+
+    function applyFromScroll() {
+      if (Date.now() < brandLockUntil) return;
+      var sid = pickSectionId();
+      if (lastPickedSection === 'for-me' && sid !== 'for-me') {
+        forMeBrand = 'intro';
+      }
+      lastPickedSection = sid;
+      var key = sid === 'for-me' ? forMeBrand : SECTION_TO_KEY[sid] || 'hero';
+      applyBrandKey(key);
+    }
+
+    document.querySelectorAll('#site-nav a[data-brand-key]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var k = a.getAttribute('data-brand-key');
+        if (k === 'about' || k === 'intro') forMeBrand = k;
+        if (k) applyBrandKey(k);
+        brandLockUntil = Date.now() + 550;
+        window.setTimeout(applyFromScroll, 580);
+      });
+    });
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          ratios.set(e.target, e.isIntersecting ? e.intersectionRatio : 0);
+        });
+        applyFromScroll();
+      },
+      { root: null, rootMargin: '-12% 0px -36% 0px', threshold: [0, 0.1, 0.22, 0.45, 0.65, 0.85, 1] },
+    );
+    sections.forEach(function (el) {
+      io.observe(el);
+    });
+  })();
+</script>
+</body></html>

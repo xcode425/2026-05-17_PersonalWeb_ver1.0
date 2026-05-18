@@ -9,7 +9,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Inter:wght@300;400;600&display=swap');
     @font-face {
       font-family: 'April Flowers';
-      src: url('/fonts/april-flowers.ttf') format('truetype');
+      src: local('April Flowers'),
+           url('../fonts/april-flowers.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -682,6 +683,28 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0.08rem;
+    text-decoration: none;
+    opacity: 0.96;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+  .topbar-tagline:hover,
+  .topbar-tagline:focus-visible {
+    color: #111827;
+    opacity: 1;
+  }
+  .topbar-tagline:active {
+    opacity: 0.78;
+  }
+  .topbar-tagline p,
+  .topbar-tagline span {
+    margin: 0;
+    padding: 0;
+    line-height: normal;
   }
   .brand-variant-hero {
     border-radius: 0.25rem;
@@ -1408,12 +1431,44 @@
     });
   })();
 
-  document.getElementById('nav-toggle').addEventListener('click', function () {
-    const nav = this.closest('nav');
-    const icon = this.querySelector('.material-symbols-outlined');
-    nav.classList.toggle('nav-collapsed');
-    icon.textContent = nav.classList.contains('nav-collapsed') ? 'menu' : 'close';
-  });
+  (function () {
+    const nav = document.getElementById('site-nav');
+    const toggleBtn = document.getElementById('nav-toggle');
+    const icon = toggleBtn ? toggleBtn.querySelector('.material-symbols-outlined') : null;
+    const mobileQuery = window.matchMedia('(max-width: 639px)');
+
+    if (nav && toggleBtn && icon) {
+      const updateNavIcon = function () {
+        icon.textContent = nav.classList.contains('nav-collapsed') ? 'menu' : 'close';
+      };
+
+      const setDefaultNavState = function () {
+        if (mobileQuery.matches) {
+          nav.classList.add('nav-collapsed');
+        } else {
+          nav.classList.remove('nav-collapsed');
+        }
+        updateNavIcon();
+      };
+
+      toggleBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        nav.classList.toggle('nav-collapsed');
+        updateNavIcon();
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!mobileQuery.matches) return;
+        if (!nav.contains(event.target) && !toggleBtn.contains(event.target) && !nav.classList.contains('nav-collapsed')) {
+          nav.classList.add('nav-collapsed');
+          updateNavIcon();
+        }
+      });
+
+      window.addEventListener('resize', setDefaultNavState);
+      setDefaultNavState();
+    }
+  })();
 
   (function () {
     const toggleBtn = document.getElementById('for-me-toggle');
